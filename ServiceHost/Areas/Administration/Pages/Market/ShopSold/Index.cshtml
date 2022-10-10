@@ -1,0 +1,76 @@
+﻿@page
+@model ServiceHost.Areas.Administration.Pages.Market.ShopSold.IndexModel
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
+@{
+    Layout = "Shared/_AdminLayout";
+    var currentAccout = AuthHelper.CurrentAccountInfo();
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <span class="card-title mx-2"> لیست دوکان های سرقلفی </span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">شماره</th>
+                                    <th class="text-center">مکان</th>
+                                    <th class="text-center">شماره دوکان</th>
+                                    <th class="text-center">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.shops)
+                                {
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">@item.Location</td>
+                                        <td class="text-center">@item.Name</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-sm btn-icon btn-primary" title="خریداران"
+                                               href="#showmodal=@Url.Page("./Index", "Tenants", new { id = item.Id })">
+                                                <i class="glyphicon glyphicon-eye-open"></i>
+                                            </a>
+                                            @if (currentAccout.RoleId == 1)
+                                            {
+                                                @if (item.Id_Shopkeeper == 0)
+                                                {
+                                                    <a class="btn btn-sm btn-icon btn-primary" title="خرید"
+                                                       href="#showmodal=@Url.Page("./Index", "Full", new { id = item.Id })">
+                                                        <i class="fa fa-thermometer-quarter"></i>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="btn btn-sm btn-icon btn-warning" title="تخلیه"
+                                                       href="#showmodal=@Url.Page("./Index", "Empty", new { id = item.Id })">
+                                                        <i class="fa fa-thermometer-full"></i>
+                                                    </a>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/datatable/datatables.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/data-table.js"></script>
+    <script>
+        $('#tbody tr').each(function (idx) {
+            $(this).children().first().html(idx + 1);
+        });
+    </script>
+}

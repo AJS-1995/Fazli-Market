@@ -1,0 +1,204 @@
+﻿@page "{id}"
+@model ServiceHost.Areas.Administration.Pages.PeoplesAccounts.ShopkeeperAccounts.Rent.EditModel
+@{
+    Layout = "Shared/_AdminLayout";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <a class="btn btn-sm btn-icon btn-success mx-2" itle="لیست" asp-page="./Index" asp-route-id="@Model.scommand.Id">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <a class="btn btn-sm btn-icon btn-secondary mx-2" title="برگشت" asp-page="/Accounts/ShopkeeperAccounts/Index">
+                            <i class="glyphicon glyphicon-arrow-left"></i>
+                        </a>
+                        <span class="card-title mx-2 mb-2">ویرایش کرایه سال - @Model.command.Year - دوکاندار - @Model.scommand.Name - @Model.scommand.Company</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="row">
+                                <input value="@Model.Id" asp-for="@Model.command.Id" type="hidden" />
+                                <input value="@Model.scommand.Id" asp-for="@Model.command.ForRent_Id" type="hidden" />
+                                <input value="@Model.mcommand.Id" asp-for="@Model.command.Money_Id" type="hidden" />
+                                <input value="@Model.command.Rent" asp-for="@Model.command.Rent" type="hidden" />
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Location_Id">موقعیت</label>
+                                        <select class="form-control" required id="Location_Id" asp-for="@Model.lcommand.Id"
+                                                onchange="onchangelist(this.val)" asp-items="@Model.Locations">
+                                            <option disabled value="" selected="">موقعیت ...</option>
+                                        </select>
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Shop_Id">کد دوکان</label>
+                                        <select class="form-control" required asp-for="@Model.command.Shop_Id" id="Shop_Id" asp-items="@Model.Shops">
+                                            <option disabled value="" selected="">کد دوکان ...</option>
+                                        </select>
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Year">سال</label>
+                                        <input dir="ltr" required class="form-control input-mask" asp-for="@Model.command.Year"
+                                               data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy" im-insert="false" placeholder="yyyy">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">حمل</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_1">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">ثور</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_2">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">جوزا</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_3">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">سرطان</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_4">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">اسد</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_5">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">سنبله</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_6">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">میزان</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_7">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">عقرب</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_8">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">قوس</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_9">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">جدی</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_10">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">دلو</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_11">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="End_Date">حوت</label>
+                                        <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Month_12">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-icon btn-outline-primary"><i class="fa fa-save"></i></button>
+                                <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index" asp-route-id="@Model.scommand.Id"><i class="fa fa-close"></i></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+
+    <script src="~/Theme/material-rtl/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/form-mask.init.js"></script>
+
+    <script>
+        function onchangelist(val) {
+            var location = $("#Location_Id").val();
+            var postData = {
+                'location': location,
+            };
+            $.ajax({
+                ccontentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "GET",
+                url: "@Url.Page("./Create", "Location")",
+                data: postData,
+                success: function (date) {
+                    $('#Shop_Id').empty();
+                    var option = '';
+                    option += '<option value="">کد دوکان ...</option>';
+                    for (var i = 0; i < date.length; i++) {
+                        option += '<option value="' + date[i].id + '">' + date[i].name + '</option>';
+                    }
+                    $('#Shop_Id').append(option);
+                },
+            });
+        }
+    </script>
+}

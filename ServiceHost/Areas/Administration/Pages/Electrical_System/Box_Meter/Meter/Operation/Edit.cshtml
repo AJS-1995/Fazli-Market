@@ -1,0 +1,155 @@
+﻿@page "{id}"
+@model ServiceHost.Areas.Administration.Pages.Electrical_System.Box_Meter.Meter.Operation.EditModel
+@{
+    Layout = "Shared/_AdminLayout";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <a class="btn btn-sm btn-icon btn-success mx-2" title="لیست" asp-page="./Index" asp-route-id="@Model.command.Meter_Id">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <span class="card-title mx-2 mb-2">ویرایش قبض - @Model.command.Date_Rrad - برای متر  - @Model.bcommand.Name _ @Model.mcommand.Name  - @Model.mcommand.Cod</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="needs-validation" novalidate>
+                        <div class="modal-body">
+                            <input type="hidden" value="@Model.command.Meter_Id" asp-for="@Model.command.Meter_Id">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Date_Rrad">تاریخ خوانده شده</label>
+                                        <input id="Date_Rrad" onchange="onchangelist(this.val)" dir="ltr" required class="form-control input-mask" asp-for="@Model.command.Date_Rrad"
+                                               data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy/mm/dd" im-insert="false" placeholder="yyyy/mm/dd">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Date_Pay">تاریخ پرداخت</label>
+                                        <input id="Date_Pay" onchange="onchangelist(this.val)" dir="ltr" required class="form-control input-mask" asp-for="@Model.command.Date_Pay"
+                                               data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy/mm/dd" im-insert="false" placeholder="yyyy/mm/dd">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Grade_Past">درجه قبلی</label>
+                                        <input id="Grade_Past" readonly type="text" onchange="Minus()" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Grade_Past">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Grade_Now">درجه فعلی</label>
+                                        <input id="Grade_Now" type="text" onchange="Minus()" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Grade_Now">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Grade">درجه مصرفی</label>
+                                        <input readonly onchange="Minus()" id="Grade" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Grade">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Price">قیمت</label>
+                                        <input id="Price" value="15.5" readonly onchange="Minus()" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Price">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Complete">مبلغ مصرفی</label>
+                                        <input readonly onchange="Minus()" id="Complete" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Complete">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Other">مصارف متفرقه</label>
+                                        <input id="Other" readonly onchange="Minus()" type="text" class="form-control text-start" required asp-for="@Model.command.Other">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Total">مبلغ قابل پرداخت</label>
+                                        <input readonly id="Total" type="text" class="form-control text-start" required asp-for="@Model.command.Total">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" asp-for="@Model.command.Id" value="@Model.command.Id">
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-icon btn-outline-primary"><i class="fa fa-save"></i> & <i class="fa fa-print"></i></button>
+                                <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index" asp-route-id="@Model.command.Meter_Id"><i class="fa fa-close"></i></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    Minus();
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+
+    <script src="~/Theme/material-rtl/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/form-mask.init.js"></script>
+
+    <script>
+        function Minus() {
+            var GradeNow = document.getElementById("Grade_Now").value;
+            var GradePast = document.getElementById("Grade_Past").value;
+            const minus = parseFloat(GradeNow) - parseFloat(GradePast);
+            document.getElementById("Grade").value = minus;
+            var grade = document.getElementById("Grade").value;
+            var price = document.getElementById("Price").value;
+            const hit = parseFloat(grade) * parseFloat(price);
+            document.getElementById("Complete").value = hit.toFixed(0);
+            var complete = document.getElementById("Complete").value;
+            var other = document.getElementById("Other").value;
+            const sum = parseFloat(complete) + parseFloat(other);
+            document.getElementById("Total").value = sum.toFixed(0);
+        }
+    </script>
+    <script>
+        function onchangelist(val) {
+            var date_Rrad = $("#Date_Rrad").val();
+            var date_Pay = $("#Date_Pay").val();
+            var postData = {
+                'date_Rrad': date_Rrad,
+                'date_Pay': date_Pay,
+            };
+            $.ajax({
+                ccontentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "GET",
+                url: "@Url.Page("./Create", "Other")",
+                data: postData,
+                success: function (date) {
+                    document.getElementById("Other").value = date;
+                },
+            });
+        }
+    </script>
+}

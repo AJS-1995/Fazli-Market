@@ -1,0 +1,45 @@
+﻿@model AccountManagement.Application.Contracts.Money.CreateMoney
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">ثبت پول جدید</h4>
+</div>
+
+<form class="needs-validation" novalidate asp-page="./Index" asp-page-handler="Create" method="post">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="Name">نام</label>
+                    <input id="Name" type="text" class="form-control" required asp-for="@Model.Name">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="Country">کشور</label>
+                    <input id="Country" type="text" class="form-control" required asp-for="@Model.Country">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="form-label" for="Symbol">سمبول</label>
+                    <input id="Symbol" type="text" class="form-control" required asp-for="@Model.Symbol">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-icon btn-outline-success"><i class="fa fa-save"></i></button>
+            <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+}

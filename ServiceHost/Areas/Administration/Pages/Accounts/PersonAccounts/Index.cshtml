@@ -1,0 +1,71 @@
+﻿@page
+@model ServiceHost.Areas.Administration.Pages.Accounts.PersonAccounts.IndexModel
+@using _0_Framework.Application;
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
+@{
+    Layout = "Shared/_AdminLayout";
+    var currentAccout = AuthHelper.CurrentAccountInfo();
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <span class="card-title mx-2">لیست افراد</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">شماره</th>
+                                    <th class="text-center">فرد</th>
+                                    <th class="text-center">شرکت</th>
+                                    <th class="text-center">شماره تماس</th>
+                                    <th class="text-center">الباقی حساب</th>
+                                    <th class="text-center">واحد</th>
+                                    @if (currentAccout.RoleId == 2 || currentAccout.RoleId == 1)
+                                    {
+                                        <th class="text-center">عملیات</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.Persons)
+                                {
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">@item.Name</td>
+                                        <td class="text-center">@item.Company</td>
+                                        <td class="text-center" dir="ltr">@item.Phone</td>
+                                        <td class="text-center">@item.Rest.ToMoney()</td>
+                                        <td class="text-center">@item.Money</td>
+                                        @if (currentAccout.RoleId == 2 || currentAccout.RoleId == 1)
+                                        {
+                                            <td class="text-center">
+                                                <a class="btn btn-sm btn-icon btn-primary" title="جزئیات" asp-page="./Details" asp-route-id="@item.Id">
+                                                    <i class="fa fa-search"></i>
+                                                </a>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/datatable/datatables.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/data-table.js"></script>
+    <script>
+        $('#tbody tr').each(function (idx) {
+            $(this).children().first().html(idx + 1);
+        });
+    </script>
+}

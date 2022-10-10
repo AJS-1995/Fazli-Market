@@ -1,0 +1,47 @@
+﻿@model AccountManagement.Application.Contracts.Money.MoneyRemoved
+@using _0_Framework.Application;
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">لیست انتقالات خزانه های حذف شده</h4>
+    <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+</div>
+
+<div class="modal-body">
+    <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+        <thead class="table-Primary">
+            <tr>
+                <th class="text-center">انتقال از</th>
+                <th class="text-center">توسط</th>
+                <th class="text-center">مبلغ</th>
+                <th class="text-center">به این</th>
+                <th class="text-center">واحد</th>
+                <th class="text-center">عملیات</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            @foreach (var item in Model.TransfersPayBoxes)
+            {
+            <tr>
+                <td class="text-center">@item.PayBoxIn</td>
+                <td class="text-center">@item.By</td>
+                    <td class="text-center">@item.Amount.ToMoney()</td>
+                <td class="text-center">@item.PayBoxTo</td>
+                <td class="text-center">
+                    @item.Money
+            </td>
+            <td class="text-center">
+                <a class="btn btn-sm btn-icon btn-danger" title="بازیابی" asp-page="./Index" asp-page-handler="Activate" asp-route-id="@item.Id">
+                    <i class="fa fa-repeat"></i>
+                </a>
+            </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+}

@@ -1,0 +1,69 @@
+﻿@model AccountManagement.Application.Contracts.Employee.EmployeeCreate
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">ثبت کارمند جدید</h4>
+</div>
+
+<form class="needs-validation" novalidate asp-page="./Index" asp-page-handler="Create" method="post">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Date">تاریخ</label>
+                    <input id="Date" dir="ltr" required class="form-control input-mask" asp-for="Date"
+                           data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy/mm/dd" im-insert="false" placeholder="yyyy/mm/dd">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="=FullName">نام</label>
+                    <input id="FullName" type="text" class="form-control" required asp-for="FullName">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" asp-for="Address">آدرس</label>
+                    <input id="Address" type="text" class="form-control" asp-for="Address">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Phone">شماره تماس</label>
+                    <input id="Mobile" dir="ltr" type="text" class="form-control" asp-for="Phone">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Salary">مبلغ معاش</label>
+                    <input id="Salary" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Salary">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Money_Id">واحد</label>
+                    <select class="form-control" required asp-for="Money_Id" id="Money_Id"
+                            asp-items='new SelectList(Model.Moneys, "Id", "Name")'>
+                        <option disabled value="" selected="">پول ...</option>
+                    </select>
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-icon btn-outline-success"><i class="fa fa-save"></i></button>
+            <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+}

@@ -1,0 +1,88 @@
+﻿@page "{id}"
+@model ServiceHost.Areas.Administration.Pages.Accounts.PayBox.ReceiptsModel
+@using _0_Framework.Application;
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
+@{
+    Layout = "Shared/_AdminLayout";
+    var currentAccout = AuthHelper.CurrentAccountInfo();
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <a class="btn btn-sm btn-icon btn-info mx-2" asp-page="./Index" title="لیست"><i class="fa fa-list"></i></a>
+                        <span class="card-title mx-2">لیست رسیده گی های @Model.Name</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">شماره</th>
+                                    <th class="text-center">تاریخ</th>
+                                    <th class="text-center">تفصیلات</th>
+                                    <th class="text-center">مبلغ</th>
+                                    <th class="text-center">واحد</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.Receipts)
+                                {
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">@item.Date</td>
+                                        <td class="text-center">دوکاندار ـ @item.ForRentName - @item.By</td>
+                                        <td class="text-center">@item.Shop_Amount.ToMoneyi()</td>
+                                        <td class="text-center">@item.Money</td>
+                                    </tr>
+                                }
+                                @foreach (var item in Model.ExSlaRecs)
+                                {
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">@item.Date</td>
+                                        <td class="text-center">کارمند ـ @item.Employee - @item.By</td>
+                                        <td class="text-center">@item.Amount.ToMoney()</td>
+                                        <td class="text-center">@item.Money</td>
+                                    </tr>
+                                }
+                                @foreach (var item in Model.Sla_Recs)
+                                {
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">@item.Date</td>
+                                        <td class="text-center">افراد ـ @item.Person - @item.By</td>
+                                        <td class="text-center">@item.Amount.ToMoney()</td>
+                                        <td class="text-center">@item.Money</td>
+                                    </tr>
+                                }
+                                @foreach (var item in Model.Transferspayboxs)
+                                {
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">@item.Date</td>
+                                        <td class="text-center">خزانه ـ @item.PayBoxIn - @item.By</td>
+                                        <td class="text-center">@item.Amount.ToMoney()</td>
+                                        <td class="text-center">@item.Money</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/datatable/datatables.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/data-table.js"></script>
+    <script>
+        $('#tbody tr').each(function (idx) {
+            $(this).children().first().html(idx + 1);
+        });
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿@model AccountManagement.Application.Contracts.Shop.Create_Shop
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">ثبت دوکان جدید</h4>
+</div>
+
+<form class="needs-validation" novalidate asp-page="./Index" asp-page-handler="Create" method="post">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="form-label" for="Location_Id">موقعیت</label>
+                    <select class="form-control" required asp-for="Location_Id" id="Location_Id"
+                            asp-items='new SelectList(Model.Locations, "Id", "Name")'>
+                        <option disabled value="" selected="">موقعیت ...</option>
+                    </select>
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="form-label" for="Name">شماره دوکان</label>
+                    <input id="Name" type="text" class="form-control" required asp-for="Name">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-icon btn-outline-success"><i class="fa fa-save"></i></button>
+            <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+</form>

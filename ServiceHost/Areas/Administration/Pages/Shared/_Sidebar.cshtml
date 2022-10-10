@@ -1,0 +1,94 @@
+﻿@{
+}
+<aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu" data-widget="tree">
+
+                @await Component.InvokeAsync("Sidebar")
+
+                @*<li><a asp-page="/Journal/Index"><i class="mdi mdi-book-open-page-variant"></i><span>روزنامچه</span></a></li>*@
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="mdi mdi-clipboard-account"></i>
+                        <span>حسابات</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a asp-page="/Accounts/EmployeeAccounts/Index"><i class="mdi mdi-account-box"></i>حسابات کارمندان</a></li>
+                        <li><a asp-page="/Accounts/Expenses/Index"><i class="mdi mdi-basket"></i>حسابات مصارف</a></li>
+                        <li><a asp-page="/Accounts/Inventorys/Index"><i class="mdi mdi-security-home"></i>حسابات انبار</a></li>
+                        <li><a asp-page="/Accounts/PersonAccounts/Index"><i class="mdi mdi-account-location"></i>حسابات افراد</a></li>
+                        <li><a asp-page="/Accounts/ShopAccounts/Index"><i class="mdi mdi-briefcase-check"></i>حسابات دوکان های کرایی</a></li>
+                        <li><a asp-page="/Accounts/ShopkeeperAccounts/Index"><i class="mdi mdi-account-card-details"></i>حسابات دوکانداران</a></li>
+                        <li><a asp-page="/Accounts/PayBox/Index"><i class="mdi mdi-basket-fill"></i>حسابات خزانه ها</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="mdi mdi-hospital-building"></i>
+                        <span>مارکیت</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a asp-page="/Market/Locations/Index"><i class="mdi mdi-home-map-marker"></i>مکان ها</a></li>
+                        <li><a asp-page="/Market/Shops/Index"><i class="mdi mdi-home-modern"></i>دوکان ها</a></li>
+                        <li><a asp-page="/Market/ShopRent/Index"><i class="mdi mdi-home"></i>دوکان های کرایی</a></li>
+                        <li><a asp-page="/Market/ShopSold/Index"><i class="mdi mdi-home-map-marker"></i>دوکان های سرقلفی</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="mdi mdi-nature-people"></i>
+                        <span>اشخاص</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a asp-page="/People/Employees/Index"><i class="mdi mdi-account-network"></i>کارمندان</a></li>
+                        <li><a asp-page="/People/ShopForRent/Index"><i class="mdi mdi-account-multiple"></i>دوکانداران کرایی</a></li>
+                        <li><a asp-page="/People/Sold/Index"><i class="mdi mdi-account-box"></i>دوکانداران سرقفلی</a></li>
+                        <li><a asp-page="/People/Persons/Index"><i class="mdi mdi-account-switch"></i>افراد</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="mdi mdi-book-multiple"></i>
+                        <span>کتاب</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a asp-page="/Book/Inventorys/Index"><i class="mdi mdi-security-home"></i>انبار</a></li>
+                        <li><a asp-page="/Book/Moneys/Index"><i class="mdi mdi-currency-usd"></i>پول ها</a></li>
+                        <li><a asp-page="/Book/PayBox/Index"><i class="mdi mdi-basket"></i>خزانه ها</a></li>
+                        <li><a asp-page="/Book/TransfersPayBox/Index"><i class="mdi mdi-basket"></i>انتقالات خزانه ها</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="mdi mdi-white-balance-incandescent"></i>
+                        <span>بخش برق</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a asp-page="/Electrical_System/General_Meter/Index"><i class="mdi mdi-thermometer-lines"></i>متر عمومی</a></li>
+                        <li><a asp-page="/Electrical_System/Box_Meter/Index"><i class="mdi mdi-radioactive"></i>صندوق برق</a></li>
+                        <li><a asp-page="/Electrical_System/Box_Meter/Meter/Index"><i class="mdi mdi-projector-screen"></i>متر برق</a></li>
+                        <li><a asp-page="/Electrical_System/Shared_Meter/Index"><i class="mdi mdi-projector-screen"></i>متر برق اشتراکی</a></li>
+                    </ul>
+                </li>
+
+                <li><a asp-page="/Index" asp-page-handler="Logout"><i class="mdi mdi-directions"></i><span>خروج</span></a></li>
+
+            </ul>
+        </section>
+    </aside>

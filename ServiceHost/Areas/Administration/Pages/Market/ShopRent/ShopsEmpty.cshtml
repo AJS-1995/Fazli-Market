@@ -1,0 +1,75 @@
+﻿@page
+@model ServiceHost.Areas.Administration.Pages.Market.ShopRent.ShopsEmptyModel
+@using _0_Framework.Application;
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
+@{
+    Layout = "Shared/_AdminLayout";
+    var currentAccout = AuthHelper.CurrentAccountInfo();
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <a class="btn btn-sm btn-icon btn-secondary mx-2" title="برگشت" asp-page="./Index">
+                            <i class="glyphicon glyphicon-arrow-left"></i>
+                        </a>
+                        <span class="card-title mx-2"> لیست دوکان های خالی</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">شماره</th>
+                                    <th class="text-center">دوکان</th>
+                                    <th class="text-center">دوکاندار</th>
+                                    <th class="text-center">تاریخ ختم</th>
+                                    <th class="text-center">الباقی حساب دوکاندار</th>
+                                    <th class="text-center">الباقی حساب دوکان</th>
+                                    @if (currentAccout.RoleId == 2 || currentAccout.RoleId == 1)
+                                    {
+                                        <th class="text-center">عملیات</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.shops)
+                                {
+                                <tr>
+                                    <td class="text-center"></td>
+                                    <td class="text-center">@item.Location - @item.Name</td>
+                                    <td class="text-center">@item.ForRentName - @item.ForRentCompany</td>
+                                    <td class="text-center">@item.Start_Date</td>
+                                        <td class="text-center">@item.ForRentRest</td>
+                                        <td class="text-center">@item.Rest.ToMoney()</td>
+                                    @if (currentAccout.RoleId == 2 || currentAccout.RoleId == 1)
+                                    {
+                                        <td class="text-center">
+                                            <a class="btn btn-sm btn-icon btn-primary" title="کرایه"
+                                               href="#showmodal=@Url.Page("./Index", "Full", new { id = item.Id })">
+                                                <i class="glyphicon glyphicon-log-in"></i>
+                                            </a>
+                                        </td>
+                                    }
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/datatable/datatables.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/data-table.js"></script>
+    <script>
+        $('#tbody tr').each(function (idx) {
+            $(this).children().first().html(idx + 1);
+        });
+    </script>
+}

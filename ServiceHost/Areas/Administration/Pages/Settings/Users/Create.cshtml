@@ -1,0 +1,70 @@
+﻿@model AccountManagement.Application.Contracts.Account.RegisterAccount
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">ثبت کاربری جدید</h4>
+</div>
+
+<form class="needs-validation" novalidate asp-page="./Index" asp-page-handler="Create" method="post" enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" asp-for="Fullname">نام کامل</label>
+                    <input id="Fullname" type="text" class="form-control" required asp-for="Fullname">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="Username">نام کاربری</label>
+                    <input id="Username" type="text" class="form-control" required asp-for="Username">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="Mobile">شماره تماس</label>
+                    <input id="Mobile" dir="ltr" type="text" required class="form-control" asp-for="Mobile">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="RoleId">وظیفه</label>
+                    <select id="RoleId" class="form-control" required asp-for="RoleId"
+                            asp-items='new SelectList(Model.Roles, "Id", "Name")'>
+                        <option disabled value="" selected="">وظیفه ها ...</option>
+                    </select>
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" id="Password">رمز عبور</label>
+                    <input type="text" class="form-control" required id="Password" name="Password">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="ProfilePhoto" class="form-label">عکس</label>
+                    <input id="ProfilePhoto" type="file" class="form-control" asp-for="ProfilePhoto" accept="image/*">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-icon btn-outline-success"><i class="fa fa-save"></i></button>
+            <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+}

@@ -1,0 +1,111 @@
+﻿@page "{id}"
+@model ServiceHost.Areas.Administration.Pages.Accounts.PersonAccounts.DetailsModel
+@using _0_Framework.Application;
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
+@{
+    Layout = "Shared/_AdminLayout";
+    var currentAccout = AuthHelper.CurrentAccountInfo();
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        @if (currentAccout.RoleId == 1)
+                        {
+                            <a class="btn btn-sm btn-icon btn-success mx-2" title="ثبت جدید" href="#showmodal=@Url.Page("./Details", "Create", new { id = Model.Id })">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                            <a class="btn btn-sm btn-icon btn-danger mx-2" title="حذف شده ها" href="#showmodal=@Url.Page("./Details", "Removed", new { id = Model.Id })">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        }
+                        <a class="btn btn-sm btn-icon btn-secondary mx-2" title="برگشت" asp-page="./Index">
+                            <i class="glyphicon glyphicon-arrow-left"></i>
+                        </a>
+                        <span class="card-title mx-2">لیست رسید و برد @Model.name</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center" rowspan="2">شماره</th>
+                                    <th class="text-center" rowspan="2">تاریخ</th>
+                                    <th class="text-center" rowspan="2">توضیحات</th>
+                                    <th class="text-center" rowspan="2">توسط</th>
+                                    <th class="text-center" rowspan="2">شماره فاکتور</th>
+                                    <th class="text-center" colspan="2">مقدار</th>
+                                    <th class="text-center" rowspan="2">واحد</th>
+                                    <th class="text-center" rowspan="2">خزانه</th>
+                                    @if (currentAccout.RoleId == 2 || currentAccout.RoleId == 1)
+                                    {
+                                        <th class="text-center" rowspan="2">عملیات</th>
+                                    }
+                                </tr>
+                                <tr>
+                                    <th>رسید</th>
+                                    <th>برد</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.Sla_Recs)
+                                {
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">@item.Date</td>
+                                        <td class="text-center">@item.Description</td>
+                                        <td class="text-center">@item.By</td>
+                                        <td class="text-center">@item.N_Invoice</td>
+                                        @if (item.Type == true)
+                                        {
+                                            <td class="text-center">@item.Amount.ToMoney()</td>
+                                            <td></td>
+                                        }
+                                        else
+                                        {
+                                            if (item.Type == false)
+                                            {
+                                                <td></td>
+                                                <td class="text-center">@item.Amount.ToMoney()</td>
+                                            }
+                                        }
+
+                                        <td class="text-center">@item.Money</td>
+                                        <td class="text-center">@item.PayBox</td>
+                                        @if (currentAccout.RoleId == 2 || currentAccout.RoleId == 1)
+                                        {
+                                            <td class="text-center">
+                                                <a class="btn btn-sm btn-icon btn-warning" title="ویرایش"
+                                                   href="#showmodal=@Url.Page("./Details", "Edit", new { id = item.Id })">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                @if (currentAccout.RoleId == 1)
+                                                {
+                                                    <a class="btn btn-sm btn-icon btn-danger" title="حذف" asp-page-handler="Remove" asp-route-id="@item.Id">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/datatable/datatables.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/data-table.js"></script>
+    <script>
+        $('#tbody tr').each(function (idx) {
+            $(this).children().first().html(idx + 1);
+        });
+    </script>
+}

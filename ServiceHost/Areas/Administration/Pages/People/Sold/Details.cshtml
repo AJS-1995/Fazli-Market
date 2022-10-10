@@ -1,0 +1,66 @@
+﻿@model AccountManagement.Application.Contracts.Sold.Edit_Sold
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">جزئیات - @Model.Name _ @Model.Company</h4>
+</div>
+
+<form>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Start_Date">تاریخ شروع</label>
+                    <input disabled dir="ltr" class="form-control" value="@Model.Start_Date">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">تاریخ ختم</label>
+                    <input disabled dir="ltr" class="form-control" value="@Model.End_Date">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Name">نام دوکان دار</label>
+                    <input disabled class="form-control" value="@Model.Name">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="Company">شرکت</label>
+                    <input disabled class="form-control" value="@Model.Company">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="Address">آدرس دوکاندار</label>
+                    <input disabled class="form-control" value="@Model.Address">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="Phone">شماره تماس</label>
+                    <input disabled dir="ltr" class="form-control" value="@Model.Phone">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="Rent">دوکان</label>
+                    <input disabled class="form-control" value="@Model.LocationName _ @Model.ShopName">
+                </div>
+            </div>
+        </div>
+        <input type="hidden" asp-for="Id" value="@Model.Id">
+        <div class="modal-footer">
+            <a class="btn btn-sm btn-icon btn-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+}

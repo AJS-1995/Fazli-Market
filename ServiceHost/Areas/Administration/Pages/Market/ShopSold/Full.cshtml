@@ -1,0 +1,72 @@
+﻿@model AccountManagement.Application.Contracts.Sold.Create_Sold
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">ثبت کرایه دوکان  - @Model.LocationName _ @Model.ShopName</h4>
+</div>
+
+<form class="needs-validation" novalidate asp-page="./Index" asp-page-handler="Full" method="post" enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="LocationName">مکان</label>
+                    <input id="LocationName" type="text" readonly required class="form-control" asp-for="LocationName">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="ShopName">دوکان</label>
+                    <input id="ShopName" type="text" readonly required class="form-control" asp-for="ShopName">
+                    <input id="Shop_Id" type="hidden" class="form-control" asp-for="Shop_Id">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Name">نام دوکان دار</label>
+                    <input id="Name" type="text" required class="form-control" asp-for="Name">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="Company">شرکت</label>
+                    <input id="Company" type="text" class="form-control" asp-for="Company">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="Address">آدرس دوکاندار</label>
+                    <input id="Address" type="text" class="form-control" asp-for="Address">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="Phone">شماره تماس</label>
+                    <input id="Mobile" dir="ltr" type="text" class="form-control" asp-for="Phone">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="Start_Date">تاریخ شروع</label>
+                    <input id="Start_Date" dir="ltr" required class="form-control input-mask" asp-for="Start_Date"
+                           data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy/mm/dd" im-insert="false" placeholder="yyyy/mm/dd">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-icon btn-outline-success"><i class="fa fa-save"></i></button>
+            <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+}

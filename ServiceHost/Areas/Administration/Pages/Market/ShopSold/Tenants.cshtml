@@ -1,0 +1,50 @@
+﻿@model AccountManagement.Application.Contracts.Sold.Removed
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">لیست کرایه نشین های دوکان سرقلفی  @Model.LocationName _ @Model.ShopName</h4>
+    <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index">
+        <i class="fa fa-close"></i>
+    </a>
+</div>
+
+<div class="modal-body">
+    <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+        <thead class="table-Primary">
+            <tr>
+                <th class="text-center">نام دوکاندار</th>
+                <th class="text-center">شماره تماس</th>
+                <th class="text-center">تاریخ شروع</th>
+                <th class="text-center">تاریخ ختم</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            @foreach (var item in Model.Solds)
+            {
+                if (item.Id == Model.Id)
+                {
+                    <tr class="bg-blue-active">
+                        <td class="text-center">@item.Name</td>
+                        <td class="text-center" dir="ltr">@item.Phone</td>
+                        <td class="text-center">@item.Start_Date</td>
+                        <td class="text-center">@item.End_Date</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-center">@item.Name</td>
+                        <td class="text-center" dir="ltr">@item.Phone</td>
+                        <td class="text-center">@item.Start_Date</td>
+                        <td class="text-center">@item.End_Date</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+}

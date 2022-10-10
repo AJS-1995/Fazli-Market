@@ -1,0 +1,376 @@
+﻿@page
+@model ServiceHost.Areas.Administration.Pages.Journal.IndexModel
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
+@{
+    Layout = "Shared/_AdminLayout";
+    var currentAccout = AuthHelper.CurrentAccountInfo();
+}
+@if (currentAccout.RoleId == 1 || currentAccout.RoleId == 2)
+{
+    <div class="row bg-white mx-15">
+        <div class="form-group col-sm-5 mt-15">
+            <div class="form-check form-check-inline btn btn-outline-success">
+                <input class="form-check-input with-gap radio-col-green mx-2" type="radio" name="Types" id="InOutInventory" checked="" value="InOutInventory" onchange="Step()">
+                <label class="form-check-label" for="InOutInventory"> ورود و خروج به انبار </label>
+            </div>
+        </div>
+        <div class="form-group col-sm-4 mt-15">
+            <div class="form-check form-check-inline btn btn-outline-dark">
+                <input class="form-check-input with-gap radio-col-green mx-2" type="radio" name="Types" id="Expenses" value="Expenses" onchange="Step()">
+                <label class="form-check-label" for="Expenses"> ثبت مصرف جدید </label>
+            </div>
+        </div>
+        <div class="form-group col-sm-3 mt-15">
+            <div class="form-check form-check-inline btn btn-outline-primary">
+                <input class="form-check-input with-gap radio-col-yellow mx-2" type="radio" name="Types" id="RentReceipts" value="RentReceipts" onchange="Step()">
+                <label class="form-check-label" for="RentReceipts"> رسید کرایه </label>
+            </div>
+        </div>
+    </div>
+    <section id="CreateInOutInventory" class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between bb-1 border-info">
+                        <div class="header-title">
+                            <a class="btn btn-sm btn-icon btn-success mx-2" asp-page="/Account/Inventorys/Index"><i class="fa fa-bars"></i></a>
+                            <span class="card-title mx-2 mb-2">ثبت ورود و خروج به انبار</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" class="needs-validation" novalidate enctype="multipart/form-data" asp-page-handler="CreateInOutInventory">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="form-group col-sm-4">
+                                        <label class="form-label col-sm-12">ورود و خروج</label>
+                                        <div class="form-check form-check-inline col-sm-5 btn btn-sm btn-icon btn-outline-success">
+                                            <input type="radio" id="In" name="Type" value="In" class="form-check-input with-gap radio-col-red" checked="" />
+                                            <label class="form-check-label" for="In" title="ورود"><i class="glyphicon glyphicon-log-in"></i></label>
+                                        </div>
+                                        <div class="form-check form-check-inline col-sm-5 btn btn-sm btn-icon btn-outline-warning">
+                                            <input type="radio" id="Out" name="Type" value="Out" class="form-check-input with-gap radio-col-purple" />
+                                            <label class="form-check-label" for="Out" title="خروج"><i class="glyphicon glyphicon-log-out"></i></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Details">توضیحات</label>
+                                            <input id="Details" type="text" required class="form-control" name="Details">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="By">توسط</label>
+                                            <input id="By" type="text" required class="form-control" name="By">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="InventoryId">انبار</label>
+                                            <select class="form-control" required name="InventoryId" id="InventoryId" asp-items="@Model.Inventorys">
+                                                <option disabled value="" selected="">انبار ها ...</option>
+                                            </select>
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Amount">تعداد</label>
+                                            <input id="Amount" type="number" class="form-control" required name="Amount">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Sum">مبلغ</label>
+                                            <input id="Sum" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'"
+                                                   required name="Sum">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="MoneyId">واحد</label>
+                                            <select class="form-control" required name="MoneyId" id="MoneyId" asp-items="@Model.Moneys">
+                                                <option disabled value="" selected="">پول ها ...</option>
+                                            </select>
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label id="Ph_Invoice" class="form-label">اسکن فاکتور</label>
+                                            <input type="file" class="form-control" id="Ph_Invoice" name="Ph_Invoice" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-sm btn-icon btn-outline-primary"><i class="fa fa-save"></i></button>
+                                    <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="CreateExpenses" class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between bb-1 border-info">
+                        <div class="header-title">
+                            <a class="btn btn-sm btn-icon btn-success mx-2" asp-page="/Account/Expenses/Index"><i class="fa fa-bars"></i></a>
+                            <span class="card-title mx-2 mb-2">ثبت مصرف</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" class="needs-validation" novalidate enctype="multipart/form-data" asp-page-handler="CreateExpenses">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Description">توضیحات</label>
+                                            <input id="Description" type="text" required class="form-control" name="Description">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Type">نوع مصرف</label>
+                                            <input id="Type" type="text" required class="form-control" name="Type">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="N_Invoice">شماره فاکتور</label>
+                                            <input id="N_Invoice" type="text" class="form-control" required name="N_Invoice">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Amount">مبلغ</label>
+                                            <input id="Amount" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric', 'groupSeparator': ',', 'digits': 2, 'digitsOptional': false, 'placeholder': '0'"
+                                                   required name="Amount">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Id_Money">واحد</label>
+                                            <select class="form-control" required name="Id_Money" id="Id_Money" asp-items="@Model.Moneys">
+                                                <option disabled value="" selected="">پول ها ...</option>
+                                            </select>
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label id="Ph_Invoice" class="form-label">اسکن فاکتور</label>
+                                            <input type="file" class="form-control" id="Ph_Invoice" name="Ph_Invoice" accept="image/*">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-sm btn-icon btn-outline-primary"><i class="fa fa-save"></i></button>
+                                    <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="ShopRentReceipts" class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between bb-1 border-info">
+                        <div class="header-title">
+                            <a class="btn btn-sm btn-icon btn-success mx-2" asp-page="/Account/ReceiptRent/Index"><i class="fa fa-bars"></i></a>
+                            <span class="card-title mx-2 mb-2"> ثبت رسید کرایه </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" class="needs-validation" novalidate enctype="multipart/form-data" asp-page-handler="CreateReceiptRent">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Location_Id">موقعیت</label>
+                                            <select class="form-control" required id="Location_Id" onchange="onchangelist(this.val)" asp-items="@Model.Locations">
+                                                <option disabled value="" selected="">موقعیت ...</option>
+                                            </select>
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Shop_Id">کد دوکان</label>
+                                            <select class="form-control" required name="Shop_Id" id="Shop_Id" onchange="onchangeCod(this.val)" asp-items="@Model.Shops">
+                                                <option disabled value="" selected="">کد دوکان ...</option>
+                                            </select>
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Shop_Name">نام دوکاندار</label>
+                                            <input id="Shop_Name" disabled type="text" class="form-control">
+                                            <input id="ForRent_Id" name="ForRent_Id" type="hidden" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Shop_Company">نام دوکان</label>
+                                            <input id="Shop_Company" disabled type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Shop_Rent">مبلغ کرایه</label>
+                                            <input id="Shop_Rent" disabled type="text" class="form-control text-start">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Shop_Rest">حساب</label>
+                                            <input id="Shop_Rest" disabled type="text" class="form-control text-start">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Shop_Money">واحد</label>
+                                            <input id="Shop_Money" disabled type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="By">توسط</label>
+                                            <input id="By" name="By" required type="text" class="form-control">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Shop_Amount">مبلغ</label>
+                                            <input id="Shop_Amount" name="Shop_Amount" onchange="total()" required type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric', 'placeholder': '0'">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Shop_Total">الباقی</label>
+                                            <input id="Shop_Total" disabled type="text" class="form-control text-start">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-sm btn-icon btn-outline-primary"><i class="fa fa-save"></i></button>
+                                    <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+
+    <script src="~/Theme/material-rtl/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/form-mask.init.js"></script>
+
+    <script src="~/js/Step.js"></script>
+
+    <script>
+        total();
+        function onchangelist(val) {
+            var location = $("#Location_Id").val();
+            var postData = {
+                'location': location,
+            };
+            $.ajax({
+                ccontentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "GET",
+                url: "@Url.Page("./Index", "Location")",
+                data: postData,
+                success: function (date) {
+                    $('#Shop_Id').empty();
+                    var option = '';
+                    option += '<option value="">کد دوکان ...</option>';
+                    for (var i = 0; i < date.length; i++) {
+                        option += '<option value="' + date[i].id + '">' + date[i].name + '</option>';
+                    }
+                    $('#Shop_Id').append(option);
+                    total();
+                },
+            });
+        }
+        function onchangeCod(val) {
+            var shop_id = $("#Shop_Id").val();
+            var postData = {
+                'shop_id': shop_id,
+            };
+            $.ajax({
+                ccontentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "GET",
+                url: "@Url.Page("./Index", "ShopId")",
+                data: postData,
+                success: function (date) {
+                    $('#Shop_Name').empty();
+                    $('#Shop_Company').empty();
+                    $('#Shop_Rent').empty();
+                    $('#Shop_Rest').empty();
+                    document.getElementById("ForRent_Id").value = date.id;
+                    document.getElementById("Shop_Name").value = date.name;
+                    document.getElementById("Shop_Company").value = date.company;
+                    document.getElementById("Shop_Rent").value = date.rent;
+                    if (date.rest == 0) {
+                        document.getElementById("Shop_Rest").value = 0;
+                    } else {
+                        document.getElementById("Shop_Rest").value = date.rest;
+                    }
+                    document.getElementById("Shop_Money").value = date.money;
+                    total();
+                },
+            });
+        }
+        function total() {
+            const rest = document.getElementById("Shop_Rest").value;
+            const amount = document.getElementById("Shop_Amount").value;
+            var total = rest - amount;
+            console.log(total);
+            if (total == 0) {
+                document.getElementById("Shop_Total").value = 0;
+            } else {
+                document.getElementById("Shop_Total").value = total;
+            }
+        }
+    </script>
+
+}

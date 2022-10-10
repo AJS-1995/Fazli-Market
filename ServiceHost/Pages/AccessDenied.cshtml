@@ -1,0 +1,9 @@
+﻿@page
+@model ServiceHost.Pages.AccessDeniedModel
+@{
+    Layout = "Shared/_ErrorLayout.cshtml";
+}
+<h1 class="text-danger font-size-180 font-weight-bold error-page-title"> 401 </h1>
+<h1> صفحه غیر مجاز </h1>
+<h3> با عرض پوزش !!! شما به این مسیر دسترسی ندارید </h3>
+<div class="my-30"><a asp-page="./Index" class="btn btn-white btn-outline"> برگشت به صفحه اصلی </a></div>

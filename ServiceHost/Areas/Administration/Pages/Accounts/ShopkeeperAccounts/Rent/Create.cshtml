@@ -1,0 +1,122 @@
+﻿@page "{id}"
+@model ServiceHost.Areas.Administration.Pages.PeoplesAccounts.ShopkeeperAccounts.Rent.CreateModel
+@{
+    Layout = "Shared/_AdminLayout";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <a class="btn btn-sm btn-icon btn-success mx-2" itle="لیست" asp-page="./Index" asp-route-id="@Model.scommand.Id">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                        <a class="btn btn-sm btn-icon btn-secondary mx-2" title="برگشت" asp-page="/Accounts/ShopkeeperAccounts/Index">
+                            <i class="glyphicon glyphicon-arrow-left"></i>
+                        </a>
+                        <span class="card-title mx-2 mb-2">ثبت کرایه جدید دوکاندار - @Model.scommand.Name - @Model.scommand.Company</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="needs-validation" novalidate enctype="multipart/form-data" asp-page-handler="Create">
+                        <div class="modal-body">
+                            <div class="row">
+                                <input value="@Model.Id" asp-for="@Model.command.ForRent_Id" type="hidden"/>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Location_Id">موقعیت</label>
+                                        <select class="form-control" required id="Location_Id" asp-for="@Model.lcommand.Id"
+                                                onchange="onchangelist(this.val)" asp-items="@Model.Locations">
+                                            <option disabled value="" selected="">موقعیت ...</option>
+                                        </select>
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Shop_Id">کد دوکان</label>
+                                        <select class="form-control" required asp-for="@Model.command.Shop_Id" id="Shop_Id" asp-items="@Model.Shops">
+                                            <option disabled value="" selected="">کد دوکان ...</option>
+                                        </select>
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Rent">کرایه</label>
+                                        <input value="@Model.scommand.Rent" asp-for="@Model.command.Rent" readonly type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Money_Id">واحد</label>
+                                            <input value="@Model.mcommand.Name" disabled type="text" class="form-control">
+                                            <input id="Money_Id" asp-for="@Model.command.Money_Id" value="@Model.mcommand.Id" type="hidden" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Year">سال</label>
+                                            <input dir="ltr" required class="form-control input-mask" asp-for="@Model.command.Years"
+                                                   data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy" im-insert="false" placeholder="yyyy">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="End_Date">ماه</label>
+                                            <input dir="ltr" required class="form-control input-mask" asp-for="@Model.command.Month"
+                                                   data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="mm" im-insert="false" placeholder="mm">
+                                            <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-icon btn-outline-primary"><i class="fa fa-save"></i></button>
+                                <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index" asp-route-id="@Model.scommand.Id"><i class="fa fa-close"></i></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+
+    <script src="~/Theme/material-rtl/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/form-mask.init.js"></script>
+
+    <script>
+        function onchangelist(val) {
+            var location = $("#Location_Id").val();
+            var postData = {
+                'location': location,
+            };
+            $.ajax({
+                ccontentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "GET",
+                url: "@Url.Page("./Create", "Location")",
+                data: postData,
+                success: function (date) {
+                    $('#Shop_Id').empty();
+                    var option = '';
+                    option += '<option value="">کد دوکان ...</option>';
+                    for (var i = 0; i < date.length; i++) {
+                        option += '<option value="' + date[i].id + '">' + date[i].name + '</option>';
+                    }
+                    $('#Shop_Id').append(option);
+                },
+            });
+        }
+    </script>
+}

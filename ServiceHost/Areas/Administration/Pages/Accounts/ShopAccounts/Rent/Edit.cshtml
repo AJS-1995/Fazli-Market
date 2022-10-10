@@ -1,0 +1,158 @@
+﻿@model AccountManagement.Application.Contracts.Rent.RentEdit
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">ویرایش کرایه سال - @Model.Year _ دوکان @Model.Location _ @Model.Shop</h4>
+</div>
+
+<form class="needs-validation" novalidate asp-page="./Index" asp-page-handler="Edit" method="post">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="Shop_Id">دوکان</label>
+                    <input value="@Model.Location _ @Model.Shop" disabled type="text" class="form-control">
+                    <input id="Shop_Id" asp-for="Shop_Id" type="hidden" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="ForRent_Id">کرایه کننده</label>
+                    <input value="@Model.ForRentName _ @Model.ForRentCompany" disabled type="text" class="form-control">
+                    <input id="ForRent_Id" asp-for="ForRent_Id" type="hidden" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Rent">کرایه</label>
+                    <input value="@Model.Rent" asp-for="Rent" readonly type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Money_Id">واحد</label>
+                    <input value="@Model.Money" disabled type="text" class="form-control">
+                    <input id="Money_Id" asp-for="Money_Id" type="hidden" class="form-control">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Year">سال</label>
+                    <input dir="ltr" required class="form-control input-mask" asp-for="Year"
+                           data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy" im-insert="false" placeholder="yyyy">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">حمل</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_1">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">ثور</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_2">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">جوزا</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_3">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">سرطان</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_4">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">اسد</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_5">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">سنبله</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_6">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">میزان</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_7">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">عقرب</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_8">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">قوس</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_9">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">جدی</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_10">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">دلو</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_11">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="End_Date">حوت</label>
+                    <input id="Rent" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Month_12">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-icon btn-outline-success"><i class="fa fa-save"></i></button>
+            <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index" asp-route-id="@Model.Shop_Id"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+</form>

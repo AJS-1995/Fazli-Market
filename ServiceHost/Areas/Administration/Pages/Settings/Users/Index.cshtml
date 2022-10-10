@@ -1,0 +1,96 @@
+﻿@page
+@model ServiceHost.Areas.Administration.Pages.Settings.Users.IndexModel
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
+@{
+    Layout = "Shared/_AdminLayout";
+    var currentAccout = AuthHelper.CurrentAccountInfo();
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        @if (currentAccout.RoleId == 1)
+                        {
+                            <a class="btn btn-sm btn-icon btn-success mx-2" title="ثبت جدید" href="#showmodal=@Url.Page("./Index", "Create")">
+                                <i class="fa fa-plus"></i>
+                        </a>
+                            <a class="btn btn-sm btn-icon btn-danger mx-2" title="حذف شده ها" href="#showmodal=@Url.Page("./Index", "Removed")">
+                                <i class="fa fa-trash"></i>
+                        </a>
+                        }
+                        <span class="card-title mx-2">لیست کاربران</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">شماره</th>
+                                    <th class="text-center">نام</th>
+                                    <th class="text-center">نام کاربری</th>
+                                    <th class="text-center">شماره تماس</th>
+                                    <th class="text-center">وظیفه</th>
+                                    <th class="text-center">عکس</th>
+                                    <th class="text-center">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.accounts)
+                                {
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">@item.Fullname</td>
+                                        <td class="text-center">@item.Username</td>
+                                        <td class="text-center" dir="ltr">@item.Mobile</td>
+                                        <td class="text-center">@item.Role</td>
+                                        <td class="text-center">
+                                            @if (item.ProfilePhoto != null && item.ProfilePhoto != "")
+                                            {
+                                                <img src="~/Uploader/@item.ProfilePhoto" style="width: 70px; height: 70px" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Uploader/Images/Users.png" style="width: 70px; height: 70px" />
+                                            }
+                                        </td>
+                                        @if (item.Id == currentAccout.Id || currentAccout.RoleId == 1)
+                                        {
+                                            <td class="text-center">
+                                                <a class="btn btn-sm btn-icon btn-warning" title="ویرایش"
+                                                   href="#showmodal=@Url.Page("./Index", "Edit", new { id = item.Id })">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a class="btn btn-sm btn-icon btn-primary" title="تغیر رمز"
+                                                   href="#showmodal=@Url.Page("./Index", "ChangePassword", new { id = item.Id })">
+                                                    <i class="fa fa-key"></i>
+                                                </a>
+                                                @if (currentAccout.RoleId == 1)
+                                                {
+                                                    <a class="btn btn-sm btn-icon btn-danger" title="حذف" asp-page-handler="Remove" asp-route-id="@item.Id">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/datatable/datatables.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/data-table.js"></script>
+    <script>
+        $('#tbody tr').each(function (idx) {
+            $(this).children().first().html(idx + 1);
+        });
+    </script>
+}

@@ -1,0 +1,130 @@
+﻿@page
+@model ServiceHost.Areas.Administration.Pages.Electrical_System.Box_Meter.Meter.CreateModel
+@{
+    Layout = "Shared/_AdminLayout";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <a class="btn btn-sm btn-icon btn-success mx-2" asp-page="./Index"><i class="fa fa-bars"></i></a>
+                        <a class="btn btn-sm btn-icon btn-secondary mx-2" title="برگشت" asp-page="/Electrical_System/Box_Meter/Meter/Index">
+                            <i class="glyphicon glyphicon-arrow-left"></i>
+                        </a>
+                        <span class="card-title mx-2 mb-2">ثبت متر جدید</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="BoxMeter_Id">صندوق برق</label>
+                                        <select class="form-control" name="BoxMeter_Id" required id="BoxMeter_Id" asp-items="@Model.BoxMeters">
+                                            <option disabled value="" selected="">صندوق برق ...</option>
+                                        </select>
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Name">نام</label>
+                                        <input id="Name" name="Name" required type="text" class="form-control">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Cod">کد</label>
+                                        <input id="Cod" name="Cod" required type="text" class="form-control">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Grade">درجه فعلی</label>
+                                        <input id="Grade" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric', 'placeholder': '0'"
+                                               required name="Grade">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Location_Id">موقعیت</label>
+                                        <select class="form-control" required id="Location_Id"
+                                                onchange="onchangelist(this.val)" asp-items="@Model.Locations">
+                                            <option disabled value="" selected="">موقعیت ...</option>
+                                        </select>
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Shop_Id">کد دوکان</label>
+                                        <select class="form-control" required name="Shop_Id" id="Shop_Id" asp-items="@Model.Shops">
+                                            <option disabled value="" selected="">کد دوکان ...</option>
+                                        </select>
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Use">حالت</label>
+                                        <select class="form-control" required name="Use" id="Use">
+                                            <option disabled value="" selected="">حالت ...</option>
+                                            <option value="true">فعال</option>
+                                            <option value="false">غیرفعال</option>
+                                        </select>
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-icon btn-outline-primary"><i class="fa fa-save"></i></button>
+                                <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+
+    <script src="~/Theme/material-rtl/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/form-mask.init.js"></script>
+
+    <script>
+        function onchangelist(val) {
+            var location = $("#Location_Id").val();
+            var postData = {
+                'location': location,
+            };
+            $.ajax({
+                ccontentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "GET",
+                url: "@Url.Page("./Create", "Location")",
+                data: postData,
+                success: function (date) {
+                    $('#Shop_Id').empty();
+                    var option = '';
+                    option += '<option value="">کد دوکان ...</option>';
+                    for (var i = 0; i < date.length; i++) {
+                        option += '<option value="' + date[i].id + '">' + date[i].name + '</option>';
+                    }
+                    $('#Shop_Id').append(option);
+                },
+            });
+        }
+    </script>
+}

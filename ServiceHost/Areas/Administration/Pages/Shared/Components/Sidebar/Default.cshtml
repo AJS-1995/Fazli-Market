@@ -1,0 +1,18 @@
+﻿@model _01_Fazli_MarketQuery.SidebarModel
+
+<li class="user-profile treeview">
+    <a href="#">
+        @if (Model.UsersQueryModel.ProfilePhoto != null && Model.UsersQueryModel.ProfilePhoto != "")
+        {
+	        <img src="~/Uploader/@Model.UsersQueryModel.ProfilePhoto" alt="user">
+        }
+        else
+        {
+            <img src="~/Uploader/Images/Users.png" alt="user">
+        }
+        <span>
+            <span class="d-block font-weight-600 font-size-16">@Model.UsersQueryModel.Fullname</span>
+            <span class="email-id text-center">@Model.UsersQueryModel.Role</span>
+        </span>
+    </a>
+</li>

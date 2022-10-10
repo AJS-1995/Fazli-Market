@@ -1,0 +1,64 @@
+﻿@model AccountManagement.Application.Contracts.Electrical_System.General_Meter.PayCreate
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">ثبت پرداختی برای - @Model.GeneralMeter</h4>
+</div>
+
+<form class="needs-validation" novalidate asp-page="./Index" asp-page-handler="Create" method="post" enctype="multipart/form-data">
+    <div class="modal-body">
+        <input type="hidden" value="@Model.GeneralMeter_Id" asp-for="GeneralMeter_Id">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="Operation_Id">قبض</label>
+                    <select class="form-control" asp-for="Operation_Id" required id="Operation_Id"
+                            asp-items='new SelectList(Model.Operations, "Id", "Date_Rrad")'>
+                        <option disabled value="" selected="">قبض ...</option>
+                    </select>
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="Date_Pay">تاریخ پرداخت شده</label>
+                    <input id="Date_Pay" dir="ltr" required class="form-control input-mask" asp-for="Date_Pay"
+                           data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy/mm/dd" im-insert="false" placeholder="yyyy/mm/dd">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="Amount">مبلغ پرداخت شده</label>
+                    <input id="Amount" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric', 'placeholder': '0'"
+                           required asp-for="Amount">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label id="Photo" class="form-label">اسکن قبض</label>
+                    <input type="file" class="form-control" id="Photo" asp-for="Photo" accept="image/*">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="form-label" for="PayBox_Id">خزانه</label>
+                    <select class="form-control" asp-for="PayBox_Id" required id="PayBox_Id"
+                            asp-items='new SelectList(Model.PayBoxes, "Id", "Name")'>
+                        <option disabled value="" selected="">خزانه ...</option>
+                    </select>
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-icon btn-outline-success"><i class="fa fa-save"></i></button>
+            <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index" asp-route-id="@Model.GeneralMeter_Id"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+</form>

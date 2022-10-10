@@ -1,0 +1,90 @@
+﻿@model AccountManagement.Application.Contracts.Sla_Rec.Sla_RecEdit
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">ثبت رسید و برد فرد - @Model.Person</h4>
+</div>
+
+<form class="needs-validation" novalidate asp-page="./Details" asp-page-handler="Edit" method="post">
+    <div class="modal-body">
+        <div class="row">
+            <input asp-for="Person_Id" type="hidden">
+            <input asp-for="Id" type="hidden">
+            <div class="row">
+                <div class="form-group col-6">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input with-gap radio-col-green" type="radio" asp-for="Type" id="Receipt" checked="" value="true">
+                        <label class="form-check-label" for="Receipt">رسید</label>
+                    </div>
+                </div>
+                <div class="form-group col-6">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input with-gap radio-col-yellow" type="radio" asp-for="Type" id="Slavery" value="false">
+                        <label class="form-check-label" for="Slavery">برد</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="Date">تاریخ</label>
+                    <input id="Date" dir="ltr" required class="form-control input-mask" asp-for="Date"
+                           data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy/mm/dd" im-insert="false" placeholder="yyyy/mm/dd">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="Description">توضیحات</label>
+                    <input class="form-control" type="text" id="Description" asp-for="Description">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="By">توسط</label>
+                    <input id="By" type="text" class="form-control" asp-for="By">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label class="form-label" for="N_Invoice">شماره فاکتور</label>
+                    <input id="N_Invoice" type="text" class="form-control" asp-for="N_Invoice">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Amount">مقدار</label>
+                    <input id="Amount" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                           required asp-for="Amount">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="PayBox_Id">خزانه</label>
+                    <select class="form-control" required asp-for="PayBox_Id" id="PayBox_Id"
+                            asp-items='new SelectList(Model.PayBoxs, "Id", "Name")'>
+                        <option disabled value="" selected="">خزانه ...</option>
+                    </select>
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Money_Id">واحد</label>
+                    <input value="@Model.Money" disabled type="text" class="form-control">
+                    <input type="hidden" asp-for="Money_Id" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-icon btn-outline-success"><i class="fa fa-save"></i></button>
+            <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Details" asp-route-id="@Model.Person_Id">
+                <i class="fa fa-close"></i>
+            </a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,106 @@
+﻿@using _0_Framework.Application
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="سیستم حسابداری | مارکیت فاضلی">
+    <meta name="author" content="عبدالجبار سروری">
+    <link rel="icon" href="~/favicon.ico">
+    <title> سیستم حسابداری | مارکیت فاضلی </title>
+
+    <link rel="stylesheet" href="~/Theme/assets/vendor_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Theme/assets/vendor_components/datatable/datatables.css" />
+    <link rel="stylesheet" href="~/Theme/material-rtl/css/bootstrap-extend.css">
+    @RenderSection("Css", false)
+    <link rel="stylesheet" href="~/Theme/assets/vendor_components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="~/Theme/material-rtl/css/master_style.css">
+    <link rel="stylesheet" href="~/Theme/material-rtl/css/skins/_all-skins.css">
+
+</head>
+
+<body class="hold-transition skin-info-light sidebar-mini fixed rtl">
+    <div class="wrapper">
+
+        <header class="main-header">
+            <a asp-page="/Home" class="logo">
+                <div class="logo-mini">
+                    <span class="light-logo"><b>M_F</b></span>
+                    <span class="dark-logo"><b>M_F</b></span>
+                </div>
+                <div class="logo-lg ml-15">
+                    <span class="light-logo"> <b> مارکیت فاضلی </b> </span>
+                    <span class="dark-logo"> <b> مارکیت فاضلی </b> </span>
+                </div>
+            </a>
+            <nav class="navbar navbar-static-top">
+                <div>
+                    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                </div>
+                <div class="datetime">
+                    <span class="time">@DateTime.Now.DayOfWeek.ToDayFarsi()</span>
+                    <span class="time">@DateTime.Now.ToMonthFarsi()</span>
+                    <span class="time">@DateTime.Now.ToFarsi()</span>
+                    <span class="time">@DateTime.Now.ToDiscountFormat()</span>
+                    <span class="time">@DateTime.Now.ToHijri()</span>
+                </div>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a asp-page="/Settings/Users/Index"><i class="mdi mdi-account-settings-variant"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <partial name="_Sidebar" />
+
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+
+        <footer class="main-footer" dir="ltr">
+            &copy; 2022 <b> Abdul Jabar _ Sarwari </b>. All Rights Reserved.
+        </footer>
+    </div>
+
+    <div id="MainModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content" id="ModalContent">
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/Theme/assets/vendor_components/popper/dist/popper.min.js"></script>
+    <script src="~/Theme/assets/vendor_components/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Theme/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Theme/assets/vendor_components/fastclick/lib/fastclick.js"></script>
+    <script src="~/Theme/assets/vendor_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <script src="~/Theme/assets/vendor_components/select2/dist/js/select2.full.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/advanced-form-element.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+
+    <script src="~/Theme/material-rtl/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/form-mask.init.js"></script>
+
+    @RenderSection("Scripts", false)
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/Theme/material-rtl/js/template.js"></script>
+    <script src="~/Theme/material-rtl/js/demo.js"></script>
+
+</body>
+</html>

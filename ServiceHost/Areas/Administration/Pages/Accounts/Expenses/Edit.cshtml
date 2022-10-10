@@ -1,0 +1,90 @@
+﻿@model AccountManagement.Application.Contracts.Expense.ExpenseEdit
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">ویرایش - @Model.Description</h4>
+</div>
+
+<form class="needs-validation" novalidate asp-page="./Index" asp-page-handler="Edit" method="post" enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Date">تاریخ</label>
+                    <input id="Date" dir="ltr" required class="form-control input-mask" asp-for="Date"
+                           data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy/mm/dd" im-insert="false" placeholder="yyyy/mm/dd">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="form-group">
+                    <label class="form-label" for="Description">توضیحات</label>
+                    <input id="Description" type="text" required class="form-control" asp-for="Description">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="Type">نوع مصرف</label>
+                    <input id="Type" type="text" required class="form-control" asp-for="Type">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="N_Invoice">شماره فاکتور</label>
+                    <input id="N_Invoice" type="text" class="form-control" required asp-for="N_Invoice">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="form-label" for="PayBox_Id">خزانه</label>
+                    <select class="form-control" required asp-for="PayBox_Id" id="PayBox_Id"
+                            asp-items='new SelectList(Model.PayBoxs, "Id", "Name")'>
+                        <option disabled value="" selected="">خزانه ها ...</option>
+                    </select>
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="Amount">مبلغ</label>
+                    <input id="Amount" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric', 'placeholder': '0'"
+                           required asp-for="Amount">
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="form-label" for="Id_Money">واحد</label>
+                    <select class="form-control" required asp-for="Id_Money" id="Id_Money"
+                            asp-items='new SelectList(Model.Moneys, "Id", "Name")'>
+                        <option disabled value="" selected="">پول ها ...</option>
+                    </select>
+                    <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label id="Ph_Invoice" class="form-label">اسکن فاکتور</label>
+                <input type="file" class="form-control" id="Ph_Invoice" asp-for="Ph_Invoice" accept="image/*">
+            </div>
+        </div>
+        <input type="hidden" asp-for="Id" value="@Model.Id">
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-sm btn-icon btn-outline-success"><i class="fa fa-save"></i></button>
+            <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+}

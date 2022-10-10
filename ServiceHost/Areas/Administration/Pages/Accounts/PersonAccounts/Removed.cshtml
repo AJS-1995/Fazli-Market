@@ -1,0 +1,68 @@
+﻿@model AccountManagement.Application.Contracts.Sla_Rec.Sla_RecRemoved
+@using _0_Framework.Application;
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">لیست رسید و برد های حذف شده فرد</h4>
+    <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Details"><i class="fa fa-close"></i></a>
+</div>
+
+<div class="modal-body">
+    <div class="table-responsive">
+        <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+            <thead class="table-Primary">
+                <tr>
+                    <th class="text-center" rowspan="2">تاریخ</th>
+                    <th class="text-center" rowspan="2">توضیحات</th>
+                    <th class="text-center" rowspan="2">توسط</th>
+                    <th class="text-center" rowspan="2">شماره فاکتور</th>
+                    <th class="text-center" colspan="2">مقدار</th>
+                    <th class="text-center" rowspan="2">واحد</th>
+                    <th class="text-center" rowspan="2">خزانه</th>
+                    <th class="text-center" rowspan="2">عملیات</th>
+                </tr>
+                <tr>
+                    <th>رسید</th>
+                    <th>برد</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                @foreach (var item in Model.Sla_Recs)
+                {
+                    <tr>
+                        <td class="text-center">@item.Date</td>
+                        <td class="text-center">@item.Description</td>
+                        <td class="text-center">@item.By</td>
+                        <td class="text-center">@item.N_Invoice</td>
+                        @if (item.Type == true)
+                        {
+                            <td class="text-center">@item.Amount.ToMoney()</td>
+                            <td></td>
+                        }
+                        else
+                        {
+                            if (item.Type == false)
+                            {
+                                <td></td>
+                                <td class="text-center">@item.Amount.ToMoney()</td>
+                            }
+                        }
+
+                        <td class="text-center">@item.Money</td>
+                        <td class="text-center">@item.PayBox</td>
+                        <td class="text-center">
+                            <a class="btn btn-sm btn-icon btn-danger" title="بازیابی" asp-page="./Details" asp-page-handler="Activate" asp-route-id="@item.Id">
+                                <i class="fa fa-repeat"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+    @section Scripts {
+        <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+        <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+        <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+    }

@@ -1,0 +1,304 @@
+﻿@page
+@model ServiceHost.Areas.Administration.Pages.HomeModel
+@using _0_Framework.Application;
+
+@{
+    Layout = "Shared/_AdminLayout";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">دوکان ها</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" asp-page="/Market/Shops/Index">دیدن</a></span>
+                </h6>
+                <p class="font-size-26"><small class="font-size-12">تعداد - </small>@Model.shops.Count</p>
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">سرقلفی</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" asp-page="/Market/ShopSold/Index">دیدن</a></span>
+                </h6>
+                <p class="font-size-26"><small class="font-size-12">تعداد - </small>@Model.shopsSold.Count</p>
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: @Model.countshopssolds" ; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">کرایه</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" asp-page="/Market/ShopRent/ShopsFull">دیدن</a></span>
+                </h6>
+                <p class="font-size-26"><small class="font-size-12">تعداد - </small>@Model.shopsFull.Count</p>
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: @Model.countshopsfulls" ; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 col-12">
+            <div class="box box-body">
+                <h6 class="mb-0">
+                    <span class="text-uppercase">خالی</span>
+                    <span class="float-right"><a class="btn btn-xs btn-primary" asp-page="/Market/ShopRent/ShopsEmpty">دیدن</a></span>
+                </h6>
+                <p class="font-size-26"><small class="font-size-12">تعداد - </small>@Model.shopsEmpty.Count</p>
+                <div class="progress progress-xxs mt-0 mb-10">
+                    <div class="progress-bar bg-dark" role="progressbar" style="width: @Model.countshopsemptys" ; height: 4px;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <span class="card-title mx-2">خزانه ها</span>
+                        <span class="card-title text-info mx-2">@Model.payboxsRest.ToMoney()</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="examplea2" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">نام</th>
+                                    <th class="text-center">موجودی</th>
+                                    <th class="text-center">واحد</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.payboxs)
+                                {
+                                    <tr>
+                                        <td class="text-center">@item.Name</td>
+                                        @if (item.Rest < 0)
+                                        {
+                                            <td class="text-center text-warning">@item.Rest.ToMoney()</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">@item.Rest.ToMoney()</td>
+                                        }
+                                        <td class="text-center">@item.Money</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card mt-15">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <span class="card-title mx-2">دوکانداران</span>
+                        <span class="card-title text-info mx-2">@Model.AccountRest.ToMoney()</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example2" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">دوکان</th>
+                                    <th class="text-center">دوکاندار</th>
+                                    <th class="text-center">حساب</th>
+                                    <th class="text-center">واحد</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.AccountRests)
+                                {
+                                    <tr>
+                                        <td class="text-center">@item.Location - @item.Shop</td>
+                                        <td class="text-center">@item.Name - @item.Company</td>
+                                        @if (item.Rest < 0)
+                                        {
+                                            <td class="text-center text-warning">@item.Rest.ToMoney()</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">@item.Rest.ToMoney()</td>
+                                        }
+                                        <td class="text-center">@item.Money</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card mt-15">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <span class="card-title mx-2">متر برق</span>
+                        <span class="card-title text-info mx-2">@Model.metersRest.ToMoney()</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="examples2" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">دوکان</th>
+                                    <th class="text-center">دوکاندار</th>
+                                    <th class="text-center">شماره تماس</th>
+                                    <th class="text-center">حساب</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.meters)
+                                {
+                                    <tr>
+                                        <td class="text-center">@item.Location - @item.Shop</td>
+                                        @foreach (var sh in Model.shops)
+                                        {
+                                            if (item.Shop_Id == sh.Id)
+                                            {
+                                                if (sh.Sold == false)
+                                                {
+                                                    @foreach (var forrent in Model.forrents)
+                                                    {
+                                                        if (sh.Id_Shopkeeper == forrent.Id)
+                                                        {
+                                                            <td class="text-center">@forrent.Name</td>
+                                                            <td class="text-center" dir="ltr">@forrent.Phone</td>
+                                                        }
+                                                    }
+                                                }
+                                                else if (sh.Sold == true)
+                                                {
+                                                    @foreach (var sold in Model.solds)
+                                                    {
+                                                        if (sh.Id_Shopkeeper == sold.Id)
+                                                        {
+                                                            <td class="text-center">@sold.Name</td>
+                                                            <td class="text-center" dir="ltr">@sold.Phone</td>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        <td class="text-center">@item.Rest.ToMoney()</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card mt-15">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <span class="card-title mx-2">افراد</span>
+                        <span class="card-title text-info mx-2">@Model.personsRest</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="examples2" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">نام</th>
+                                    <th class="text-center">حساب</th>
+                                    <th class="text-center">واحد</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.persons)
+                                {
+                                    <tr>
+                                        <td class="text-center">@item.Name - @item.Company</td>
+                                        @if (item.Rest < 0)
+                                        {
+                                            <td class="text-center text-warning">@item.Rest.ToMoney()</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">@item.Rest.ToMoney()</td>
+                                        }
+                                        <td class="text-center">@item.Money</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card mt-15">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <span class="card-title mx-2">کارمندان</span>
+                        <span class="card-title text-info mx-2">@Model.employeesRest</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="exampled2" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">نام</th>
+                                    <th class="text-center">حساب</th>
+                                    <th class="text-center">واحد</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.employees)
+                                {
+                                    <tr>
+                                        <td class="text-center">@item.FullName</td>
+                                        @if (item.Rest < 0)
+                                        {
+                                            <td class="text-center text-warning">@item.Rest.ToMoney()</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">@item.Rest.ToMoney()</td>
+                                        }
+                                        <td class="text-center">@item.Money</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+    <script src="~/Theme/assets/vendor_components/raphael/raphael.min.js"></script>
+    <script src="~/Theme/assets/vendor_components/morris.js/morris.min.js"></script>
+
+    <script src="~/Theme/material-rtl/js/pages/widget-morris-charts.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/dashboard4.js"></script>
+
+    <script src="~/Theme/assets/vendor_components/datatable/datatables.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/data-table.js"></script>
+}

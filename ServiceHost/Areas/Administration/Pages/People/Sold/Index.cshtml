@@ -1,0 +1,85 @@
+﻿@page
+@model ServiceHost.Areas.Administration.Pages.People.Sold.IndexModel
+@inject _0_Framework.Application.IAuthHelper AuthHelper;
+@{
+    Layout = "Shared/_AdminLayout";
+    var currentAccout = AuthHelper.CurrentAccountInfo();
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        @if (currentAccout.RoleId == 1)
+                        {
+                            <a class="btn btn-sm btn-icon btn-success mx-2" asp-page="./Create"><i class="fa fa-plus"></i></a>
+                            <a class="btn btn-sm btn-icon btn-danger mx-2" href="#showmodal=@Url.Page("./Index", "Removed")"><i class="fa fa-trash"></i></a>
+                        }
+                        <span class="card-title mx-2">لیست دوکانداران</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                            <thead class="table-Primary">
+                                <tr>
+                                    <th class="text-center">شماره</th>
+                                    <th class="text-center">دوکان</th>
+                                    <th class="text-center">دوکاندار</th>
+                                    <th class="text-center">شماره تماس</th>
+                                    <th class="text-center">تاریخ شروع</th>
+                                    <th class="text-center">تاریخ ختم</th>
+                                    @if (currentAccout.RoleId == 2 || currentAccout.RoleId == 1)
+                                    {
+                                        <th class="text-center">عملیات</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @foreach (var item in Model.Sold)
+                                {
+                                    <tr>
+                                        <td class="text-center"></td>
+                                        <td class="text-center">@item.Location _ @item.Shop</td>
+                                        <td class="text-center">@item.Name _ @item.Company</td>
+                                        <td class="text-center" dir="ltr">@item.Phone</td>
+                                        <td class="text-center">@item.Start_Date</td>
+                                        <td class="text-center">@item.End_Date</td>
+                                        @if (currentAccout.RoleId == 2 || currentAccout.RoleId == 1)
+                                        {
+                                            <td class="text-center">
+                                                <a class="btn btn-sm btn-icon btn-warning" title="ویرایش" asp-page="./Edit" asp-route-id="@item.Id">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a class="btn btn-sm btn-icon btn-primary" title="جزئیات"
+                                                   href="#showmodal=@Url.Page("./Index", "Details", new { id = item.Id })">
+                                                    <i class="fa fa-search"></i>
+                                                </a>
+                                                @if (currentAccout.RoleId == 1)
+                                                {
+                                                    <a class="btn btn-sm btn-icon btn-danger" title="حذف" asp-page-handler="Remove" asp-route-id="@item.Id">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/datatable/datatables.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/data-table.js"></script>
+    <script>
+        $('#tbody tr').each(function (idx) {
+            $(this).children().first().html(idx + 1);
+        });
+    </script>
+}

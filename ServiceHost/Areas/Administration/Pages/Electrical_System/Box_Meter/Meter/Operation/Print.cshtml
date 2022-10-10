@@ -1,0 +1,92 @@
+﻿@page
+@model ServiceHost.Areas.Administration.Pages.Electrical_System.Box_Meter.Meter.Operation.PrintModel
+@using _0_Framework.Application;
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="سیستم حسابداری | مارکیت فاضلی">
+    <meta name="author" content="عبدالجبار سروری">
+    <link rel="icon" href="~/favicon.ico">
+    <title> سیستم حسابداری | مارکیت فاضلی </title>
+    <link rel="stylesheet" href="~/Theme/assets/vendor_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Theme/material-rtl/css/bootstrap-extend.css">
+    <link rel="stylesheet" href="~/Theme/material-rtl/css/master_style.css">
+    <link rel="stylesheet" href="~/Theme/material-rtl/css/skins/_all-skins.css">
+
+</head>
+<body onafterprint="myFunction()" class="hold-transition skin-info-light sidebar-mini fixed rtl">
+<h3 class="text-center mb-15">قبض برق دوکانهای مارکیت فاضلی</h3>
+    <input type="hidden" id="Meter_Id" value="@Model.meter_Op.Meter_Id" />
+    <div class="row px-15">
+        <label class="form-label col-3" for="Date_Rrad">تاریخ خوانده شده</label>
+        <label id="Date_Rrad" dir="ltr" class="form-label col-3">@Model.meter_Op.Date_Rrad</label>
+        <label class="form-label col-3" for="Date_Pay">تاریخ پرداخت</label>
+        <label id="Date_Pay" dir="ltr" class="form-label col-3">@Model.meter_Op.Date_Pay</label>
+    </div>
+    <hr />
+    <div class="row px-15">
+        <label class="form-label col-3" for="Date_Rrad">موقعیت متر</label>
+        <label id="Date_Rrad" dir="ltr" class="form-label col-5">@Model.meter_Op.Location_M</label>
+        <label class="form-label col-2" for="Date_Pay">کد متر</label>
+        <label id="Date_Pay" dir="ltr" class="form-label col-2">@Model.meter_Op.Meter_Cod</label>
+    </div>
+    <div class="row px-15">
+        <label class="form-label col-3" for="Date_Pay">دوکاندار</label>
+        <label id="Date_Pay" dir="ltr" class="form-label col-5">@Model.meter_Op.ShopKeeper</label>
+        <label class="form-label col-2" for="Date_Rrad">موقعیت دوکان</label>
+        <label id="Date_Rrad" dir="ltr" class="form-label col-2">@Model.meter_Op.Location_S</label>
+    </div>
+    <hr />
+    <div class="row px-15">
+        <label class="form-label col-3" for="Date_Rrad">درجه قبلی</label>
+        <label id="Date_Rrad" dir="ltr" class="form-label col-3">@Model.meter_Op.Grade_Past</label>
+        <label class="form-label col-3" for="Date_Pay">درجه فعلی</label>
+        <label id="Date_Pay" dir="ltr" class="form-label col-3">@Model.meter_Op.Grade_Now</label>
+    </div>
+    <div class="row px-15">
+        <label class="form-label col-3" for="Date_Rrad">درجه مصرفی</label>
+        <label id="Date_Rrad" dir="ltr" class="form-label col-3">@Model.meter_Op.Grade</label>
+        <label class="form-label col-3" for="Date_Rrad">قیمت فی</label>
+        <label id="Date_Rrad" dir="ltr" class="form-label col-3">@Model.meter_Op.Price</label>
+    </div>
+    <div class="row px-15">
+        <label class="form-label col-3" for="Date_Pay">مبلغ مصرف</label>
+        <label id="Date_Pay" dir="ltr" class="form-label col-3">@Model.meter_Op.Complete.ToMoney()</label>
+        <label class="form-label col-3" for="Date_Pay">مصارف متفرقه</label>
+        <label id="Date_Pay" dir="ltr" class="form-label col-3">@Model.meter_Op.Other.ToMoney()</label>
+    </div>
+    <hr />
+    <div class="row px-15">
+        <label class="form-label col-5" for="Date_Pay">مبلغ قابل پرداخت عدد</label>
+        <label id="Date_Pay" dir="ltr" class="form-label col-7">@Model.meter_Op.Total.ToMoney() - AF</label>
+    </div>
+    <div class="row px-15">
+        <label class="form-label col-5" for="Date_Pay">مبلغ قابل پرداخت حروف</label>
+        <label id="Date_Pay" dir="ltr" class="form-label col-7">@Model.meter_Op.Total_Persian - افغانی</label>
+    </div>
+    <hr />
+    <div class="row px-15">
+        <label class="form-label col-12 text-center" for="Date_Pay">نوت در صورت عدم پرداخت قبض بعداز تاریخ پرداخت برق قطع میگردد.</label>
+    </div>
+<script>
+        loadEventListeners();
+        function loadEventListeners() {
+            prints();
+        }
+        function prints() {
+            window.print();
+
+            onafterprint = function () {
+                var meterid = document.getElementById("Meter_Id").value;
+                window.location.href = "/Administration/Electrical_System/Box_Meter/Meter/Operation/" + meterid;
+            }
+        } 
+</script>
+</body>
+</html>

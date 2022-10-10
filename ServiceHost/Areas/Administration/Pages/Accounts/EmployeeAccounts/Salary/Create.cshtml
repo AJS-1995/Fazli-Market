@@ -1,0 +1,53 @@
+﻿@model AccountManagement.Application.Contracts.Salary.SalaryCreate
+@{
+}
+<div class="modal-header">
+    <h4 class="modal-title">ثبت معاش کارمند - @Model.Employee</h4>
+</div>
+
+<form class="needs-validation" novalidate asp-page="./Index" asp-page-handler="Create" method="post">
+    <div class="modal-body">
+        <div class="row">
+            <input asp-for="Employee_Id" type="hidden">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label" for="Month_Salary">معاش</label>
+                        <input id="Month_Salary" readonly asp-for="Month_Salary" class="form-control">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label" for="Money_Id">واحد</label>
+                        <input value="@Model.Money" disabled type="text" class="form-control">
+                        <input id="Money_Id" asp-for="Money_Id" type="hidden" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label" for="Year">سال</label>
+                        <input dir="ltr" required class="form-control input-mask" asp-for="Year"
+                               data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy" im-insert="false" placeholder="yyyy">
+                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label" for="Month">ماه</label>
+                        <input dir="ltr" required class="form-control input-mask" asp-for="Month"
+                               data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="mm" im-insert="false" placeholder="mm">
+                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-icon btn-outline-success"><i class="fa fa-save"></i></button>
+                <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index" asp-route-id="@Model.Employee_Id">
+                    <i class="fa fa-close"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</form>

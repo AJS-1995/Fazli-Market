@@ -1,0 +1,135 @@
+﻿@page "{id}"
+@model ServiceHost.Areas.Administration.Pages.Book.TransfersPayBox.EditModel
+@{
+    Layout = "Shared/_AdminLayout";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between bb-1 border-info">
+                    <div class="header-title">
+                        <a class="btn btn-sm btn-icon btn-success mx-2" asp-page="./Index"><i class="fa fa-bars"></i></a>
+                        <span class="card-title mx-2 mb-2">ویرایش انتقالات</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="needs-validation" novalidate>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Date">تاریخ</label>
+                                        <input id="Date" dir="ltr" required class="form-control input-mask" asp-for="@Model.command.Date"
+                                               data-inputmask="'alias': 'datetime'" data-inputmask-inputformat="yyyy/mm/dd" im-insert="false" placeholder="yyyy/mm/dd">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="PayBoxIn_Id">انتقال از</label>
+                                        <select class="form-control" onchange="onchangelist(this.val)" asp-for="@Model.command.PayBoxIn_Id" required id="PayBoxIn_Id" asp-items="@Model.PayBox">
+                                            <option disabled value="" selected="">خزانه ها ...</option>
+                                        </select>
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="By">توسط</label>
+                                        <input id="By" asp-for="@Model.command.By" required type="text" class="form-control">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Amount">مبلغ</label>
+                                        <input id="Amount" type="text" class="form-control input-mask text-start" data-inputmask="'alias': 'numeric'"
+                                               required asp-for="@Model.command.Amount">
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="PayBoxTo_Id">به این</label>
+                                        <select class="form-control" onchange="onchangeCod(this.val)" asp-for="@Model.command.PayBoxTo_Id" required id="PayBoxTo_Id" asp-items="@Model.PayBox">
+                                            <option disabled value="" selected="">خزانه ها ...</option>
+                                        </select>
+                                        <div class="invalid-feedback">اطلاعات باید وارد شود !</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="form-label" for="Money_Id">واحد</label>
+                                        <input id="Money_Id" asp-for="@Model.command.Money_Id" type="hidden">
+                                        <input id="Money" value="@Model.command.Money" readonly type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <input asp-for="@Model.command.Id" value="@Model.command.Id" type="hidden">
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-icon btn-outline-primary"><i class="fa fa-save"></i></button>
+                                <a class="btn btn-sm btn-icon btn-outline-warning" asp-page="./Index"><i class="fa fa-close"></i></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/Theme/assets/vendor_components/formatter/formatter.js"></script>
+    <script src="~/Theme/assets/vendor_components/formatter/jquery.formatter.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/formatter.js"></script>
+
+    <script src="~/Theme/material-rtl/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="~/Theme/material-rtl/js/pages/form-mask.init.js"></script>
+
+    <script>
+        function onchangelist(val) {
+            var payboxin = $("#PayBoxIn_Id").val();
+            var postData = {
+                'payboxin': payboxin,
+            };
+            $.ajax({
+                ccontentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "GET",
+                url: "@Url.Page("./Create", "PayBox")",
+                data: postData,
+                success: function (date) {
+                    $('#PayBoxTo_Id').empty();
+                    var option = '';
+                    option += '<option value="">خزانه ها ...</option>';
+                    for (var i = 0; i < date.length; i++) {
+                        option += '<option value="' + date[i].id + '">' + date[i].name + '</option>';
+                    }
+                    $('#PayBoxTo_Id').append(option);
+                },
+            });
+        }
+        function onchangeCod(val) {
+            var payboxto = $("#PayBoxTo_Id").val();
+            var postData = {
+                'payboxto': payboxto,
+            };
+            $.ajax({
+                ccontentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                type: "GET",
+                url: "@Url.Page("./Create", "PayBoxTo")",
+                data: postData,
+                success: function (date) {
+                    $('#Money_Id').empty();
+                    document.getElementById("Money_Id").value = date.money_Id;
+                    $('#Money').empty();
+                    document.getElementById("Money").value = date.money;
+
+                },
+            });
+        }
+    </script>
+}
